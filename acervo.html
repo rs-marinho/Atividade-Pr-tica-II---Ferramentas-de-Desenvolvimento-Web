@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Acervo | Biblioteca Ponte Verde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+<div class="wrap">
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-name">Biblioteca Ponte Verde</span>
+      <span class="brand-sub">Acervo comunitário</span>
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="acervo.html" aria-current="page">Acervo</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo" class="pagina">
+    <h1>Acervo</h1>
+    <p class="lead">Busque por título, autor ou número de classificação.</p>
+
+    <div class="filtros">
+      <div class="campo">
+        <label for="busca">Buscar</label>
+        <input type="search" id="busca" placeholder="Ex.: Machado, 005.74, redes">
+      </div>
+      <label class="marcar" for="so-disponiveis">
+        <input type="checkbox" id="so-disponiveis">
+        Mostrar só disponíveis
+      </label>
+    </div>
+
+    <div class="rolagem">
+      <table id="tabela">
+        <caption id="contagem" aria-live="polite">8 obras encontradas</caption>
+        <thead>
+          <tr><th scope="col">CDD</th><th scope="col">Título</th><th scope="col">Autor</th><th scope="col">Situação</th></tr>
+        </thead>
+        <tbody>
+          <tr data-situacao="disponivel"><td class="num">869.3</td><td>Dom Casmurro</td><td>Machado de Assis</td><td class="situacao ok">Disponível</td></tr>
+          <tr data-situacao="disponivel"><td class="num">869.3</td><td>Memórias Póstumas de Brás Cubas</td><td>Machado de Assis</td><td class="situacao ok">Disponível</td></tr>
+          <tr data-situacao="emprestado"><td class="num">869.3</td><td>Vidas Secas</td><td>Graciliano Ramos</td><td class="situacao fora">Emprestado</td></tr>
+          <tr data-situacao="disponivel"><td class="num">869.3</td><td>A Hora da Estrela</td><td>Clarice Lispector</td><td class="situacao ok">Disponível</td></tr>
+          <tr data-situacao="emprestado"><td class="num">005.74</td><td>Sistemas de Banco de Dados</td><td>Ramez Elmasri e Shamkant Navathe</td><td class="situacao fora">Emprestado</td></tr>
+          <tr data-situacao="disponivel"><td class="num">005.1</td><td>Engenharia de Software</td><td>Ian Sommerville</td><td class="situacao ok">Disponível</td></tr>
+          <tr data-situacao="disponivel"><td class="num">004.6</td><td>Redes de Computadores</td><td>Andrew Tanenbaum</td><td class="situacao ok">Disponível</td></tr>
+          <tr data-situacao="disponivel"><td class="num">909</td><td>Sapiens: uma breve história da humanidade</td><td>Yuval Noah Harari</td><td class="situacao ok">Disponível</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="nota">Acervo de exemplo. Os números seguem a Classificação Decimal de Dewey (CDD), e a situação de cada livro é ilustrativa.</p>
+  </main>
+
+  <footer>
+    <p>Biblioteca Ponte Verde é um nome fictício, criado para uma atividade prática de HTML e CSS escrita à mão, sem modelos prontos.</p>
+  </footer>
+</div>
+
+<script>
+  var busca = document.getElementById('busca');
+  var soDisp = document.getElementById('so-disponiveis');
+  var linhas = Array.prototype.slice.call(document.querySelectorAll('#tabela tbody tr'));
+  var contagem = document.getElementById('contagem');
+
+  function aplicar() {
+    var termo = busca.value.trim().toLowerCase();
+    var total = 0;
+    linhas.forEach(function (linha) {
+      var combina = linha.textContent.toLowerCase().indexOf(termo) !== -1;
+      var situacaoOk = !soDisp.checked || linha.getAttribute('data-situacao') === 'disponivel';
+      var mostrar = combina && situacaoOk;
+      linha.hidden = !mostrar;
+      if (mostrar) { total++; }
+    });
+    contagem.textContent = total + (total === 1 ? ' obra encontrada' : ' obras encontradas');
+  }
+
+  busca.addEventListener('input', aplicar);
+  soDisp.addEventListener('change', aplicar);
+</script>
+</body>
+</html>

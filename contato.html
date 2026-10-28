@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contato | Biblioteca Ponte Verde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+<div class="wrap">
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-name">Biblioteca Ponte Verde</span>
+      <span class="brand-sub">Acervo comunitário</span>
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="acervo.html">Acervo</a></li>
+        <li><a href="contato.html" aria-current="page">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo" class="pagina">
+    <h1>Contato</h1>
+    <p class="lead">Dúvidas sobre cadastro, renovação ou sugestões de livros.</p>
+
+    <div class="contato">
+      <form id="form-contato" novalidate>
+        <div class="campo">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" autocomplete="name">
+          <p class="erro" id="erro-nome"></p>
+        </div>
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="email">
+          <p class="erro" id="erro-email"></p>
+        </div>
+        <div class="campo">
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto">
+            <option>Cadastro de leitor</option>
+            <option>Renovação de empréstimo</option>
+            <option>Sugestão de livro</option>
+            <option>Outro assunto</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem"></textarea>
+          <p class="erro" id="erro-mensagem"></p>
+        </div>
+        <div><button class="btn" type="submit">Enviar mensagem</button></div>
+        <p class="retorno" id="retorno" role="status" hidden></p>
+      </form>
+
+      <aside>
+        <h2>Onde estamos</h2>
+        <address>
+          Rua das Acácias, 120<br>
+          Centro<br>
+          contato@example.org
+        </address>
+        <p class="nota">Endereço e e-mail de exemplo, usados apenas nesta atividade.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <p>Biblioteca Ponte Verde é um nome fictício, criado para uma atividade prática de HTML e CSS escrita à mão, sem modelos prontos.</p>
+  </footer>
+</div>
+
+<script>
+  var form = document.getElementById('form-contato');
+  var retorno = document.getElementById('retorno');
+
+  function erro(id, texto) {
+    document.getElementById('erro-' + id).textContent = texto;
+    return texto === '';
+  }
+
+  form.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+    var nome = document.getElementById('nome').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var mensagem = document.getElementById('mensagem').value.trim();
+
+    var okNome = erro('nome', nome.length < 3 ? 'Informe seu nome com pelo menos 3 letras.' : '');
+    var okEmail = erro('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Informe um e-mail válido, como nome@dominio.com.');
+    var okMsg = erro('mensagem', mensagem.length < 10 ? 'Escreva uma mensagem com pelo menos 10 caracteres.' : '');
+
+    if (okNome && okEmail && okMsg) {
+      retorno.textContent = 'Dados conferidos, ' + nome + '. Este formulário é uma demonstração e não envia mensagens.';
+      retorno.hidden = false;
+      form.reset();
+    } else {
+      retorno.hidden = true;
+    }
+  });
+</script>
+</body>
+</html>
